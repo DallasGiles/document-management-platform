@@ -1,9 +1,24 @@
-// client/src/apollo/client.js
-import { ApolloClient, InMemoryCache } from '@apollo/client';
+import { ApolloClient, InMemoryCache, createHttpLink } from '@apollo/client';
+import { setContext } from '@apollo/client/link/context';
+// HTTP connection to the API
+const httpLink = createHttpLink({
+  uri: 'http://localhost:5000/graphql',
+});
+
+// Auth middleware to attach JWT token to headers
+const authLink = setContext((_, { headers }) => {
+  const token = localStorage.getItem('token');
+  return {
+    headers: {
+      ...headers,
+      authorization: token ? `Bearer ${token}` : '',
+    },
+  };
+});
 
 const client = new ApolloClient({
-  uri: 'http://localhost:5000/graphql',
-  cache: new InMemoryCache()
+  link: authLink.concat(httpLink),
+  cache: new InMemoryCache(),
 });
 
 export default client;

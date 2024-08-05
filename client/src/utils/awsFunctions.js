@@ -1,7 +1,7 @@
 // Import S3 bucket functions for cloud document uploads and downloads
 import { S3Client, ListBucketsCommand } from "@aws-sdk/client-s3";
 
-let s3Client = new S3Client({
+const s3Client = new S3Client({
     region: "us-east-1"
 });
 
