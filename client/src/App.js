@@ -123,8 +123,6 @@ function App() {
 }
 
 
-export default App;
-
 {
   /* <script>
     function expandSidebar() {
