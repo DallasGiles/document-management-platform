@@ -1,8 +1,7 @@
-// src/App.js
 import React, { useContext } from 'react';
 import { ApolloProvider } from '@apollo/client';
 import client from './apollo/client';
-import Home from './pages/Home';
+import Home from './pages/home';
 import ForemanDashboard from './components/Dashboard/ForemanDashboard';
 import BasicUserDashboard from './components/Dashboard/BasicUserDashboard';
 import { AuthContext } from './context/AuthContext'; // Assuming you have an AuthContext to provide user info
