@@ -1,4 +1,5 @@
 const SitePlan = require('../models/SitePlan');
+// Change code below to appropriate functions from AWS SDK
 const { uploadFile, getFile } = require('../utils/aws');
 
 const sitePlanResolvers = {
