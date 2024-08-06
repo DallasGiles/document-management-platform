@@ -1,9 +1,20 @@
+import * as multer from 'multer';
+import crypto from 'crypto';
+import { uploadFile, deleteFile, getObjectSignedUrl } from './utils/aws';
+
 const express = require('express');
 const { ApolloServer } = require('apollo-server-express');
 const connectDB = require('./config/db');
 const typeDefs = require('./schemas');
 const resolvers = require('./resolvers');
 const { auth } = require('./middleware/auth');
+
+// Multer assists in dealing with multipart/form-data, keeps file in memory without saving file to file system
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
+
+// upload.single('sitePlan'); Middleware function that will be needed to use in conjunction with multer in POST routes
+
 
 // Load environment variables from .env file
 require('dotenv').config();
