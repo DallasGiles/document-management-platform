@@ -23,13 +23,17 @@ function ManagementPage() {
               // style="position: relative; height:200px; width:200px"
               style={{
                 position: "relative",
-                height: "200px",
-                width: "200px",
+                height: "550px",
+                width: "500px",
               }}
             >
               {/* <canvas id="usersChart"></canvas> */}
-              <embed src="http://example.com/the.pdf" width="500" height="375" 
- type="application/pdf"></embed>
+              <object class="pdf" 
+            data=
+"Blueprint2-1.pdf"
+            width="800"
+            height="500">
+    </object>
             </div>
           </div>
 

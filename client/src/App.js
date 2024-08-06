@@ -12,12 +12,8 @@ function App() {
             <button id="menu-button" onclick="expandSidebar()">
               <i class="fas fa-bars text-cyan-500 text-lg"></i>
             </button>
-            <div class="mx-auto">
-              <img
-                src="https://www.emprenderconactitud.com/img/POC%20WCS%20(1).png"
-                alt="logo"
-                class="h-20 w-28"
-              />
+            <div class="mx-auto h-16 flex items-center">
+              <h1>JOB COMS</h1>
             </div>
             <div class="space-x-4">
               <button>
@@ -33,7 +29,7 @@ function App() {
         {/* SIDEBAR */}
         <div
           id="sidebar"
-          class="w-28 bg-white h-screen fixed rounded-none border-none transition-all duration-200 ease-in-out overflow-hidden"
+          class="w-auto bg-white h-screen fixed rounded-none border-none transition-all duration-200 ease-in-out overflow-hidden"
         >
           <div class="p-2 space-y-4">
             <button
@@ -98,7 +94,7 @@ function App() {
           </div>
         </div>
         {/* SIDEBAR ENDS */}
-        <div class="ml-[70px] z-50 relative">
+        <div class="z-50 relative">
           <Outlet />
         </div>
       </div>
