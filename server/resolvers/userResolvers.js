@@ -1,25 +1,17 @@
 const User = require('../models/user');
-const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs');
 
 const userResolvers = {
   Query: {
     users: () => User.find(),
     user: (parent, { id }) => User.findById(id),
-    usersUnderForeman: (parent, { foremanId }) => User.find({ foreman: foremanId }),
   },
   Mutation: {
-    signUp: async (parent, { username, email, password, role, organization, foreman }) => {
+    signUp: async (parent, { username, email, password, role }) => {
       const hashedPassword = await bcrypt.hash(password, 10);
-      const newUser = new User({
-        username,
-        email,
-        password: hashedPassword,
-        role,
-        organization,
-        foreman: role === 'Basic User' ? foreman : undefined,
-      });
-      return newUser.save();
+      const user = new User({ username, email, password: hashedPassword, role });
+      return user.save();
     },
     login: async (parent, { email, password }) => {
       const user = await User.findOne({ email });
