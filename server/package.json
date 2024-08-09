@@ -4,12 +4,14 @@
   "description": "platform for people to share documents",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.624.0",
     "@aws-sdk/s3-request-presigner": "^3.624.0",
     "aws-sdk": "^2.1666.0",
     "bcryptjs": "^2.4.3",

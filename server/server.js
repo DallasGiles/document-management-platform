@@ -1,6 +1,5 @@
-import * as multer from 'multer';
-import crypto from 'crypto';
-import { uploadFile, deleteFile, getObjectSignedUrl } from './utils/aws';
+const crypto = require('crypto');
+const { uploadFile, deleteFile, getObjectSignedUrl } = require('./utils/aws.js');
 
 const express = require('express');
 const { ApolloServer } = require('apollo-server-express');
