@@ -66,6 +66,10 @@ const s3Client = new S3Client({
 })
 
 
+app.get('/admin', checkRole('Admin'), (req, res) => {
+  res.send('Welcome Admin');
+});
+
 export function uploadFile(fileBuffer, fileName, mimetype) {
   const uploadParams = {
     Bucket: bucketName,
