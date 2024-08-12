@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({
+  // TODO: username should probably be removed
   username: {
     type: String,
     required: true,
