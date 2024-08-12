@@ -9,6 +9,7 @@ import ManagementPage from './pages/ManagementPage';
 import EmployeePage from './pages/EmployeePage';
 import Login from './pages/Login';
 import { AuthProvider } from './context/AuthContext';
+import SignUp from './pages/signUp';
 
 
 const router = createBrowserRouter([
@@ -19,6 +20,10 @@ const router = createBrowserRouter([
       {
         path: '/',
         element: <Login />
+      },
+      {
+        path: '/signup',
+        element: <SignUp/>
       },
       {
         path: '/management',

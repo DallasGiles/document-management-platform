@@ -1,6 +1,6 @@
 const SitePlan = require('../models/SitePlan');
 // Change code below to appropriate functions from AWS SDK
-const { uploadFile, getFile } = require('../utils/aws');
+const { uploadFile, deleteFile, getObjectSignedUrl } = require('../utils/aws');
 
 const sitePlanResolvers = {
   Query: {
@@ -21,17 +21,20 @@ const sitePlanResolvers = {
     },
   },
   Mutation: {
-    uploadPlan: async (parent, { title, content }, { user }) => {
+    // uploadPlan: async (parent, { title, content }, { user }) => {
+    uploadPlan: async (parent, { file }, { user }) => {
       if (user.role !== 'Foreman') {
         throw new Error('Forbidden');
       }
-      const file = {
-        filename: `${title}-${Date.now()}.pdf`,
-        content: Buffer.from(content, 'utf-8'), // Ensure content is in Buffer format
-      };
-      const uploadResponse = await uploadFile(file);
+      // const file = {
+      //   filename: `${title}-${Date.now()}.pdf`,
+      //   content: Buffer.from(content, 'utf-8'), // Ensure content is in Buffer format
+      // };
+      const { createReadStream, filename, mimetype } = await file;
+      const stream = createReadStream();
+      const uploadResponse = await uploadFile(stream, filename, mimetype);
       const newPlan = new SitePlan({
-        title,
+        title: filename,
         content: uploadResponse.Location, // URL to the file in S3
         fileKey: uploadResponse.Key,
         uploadedBy: user.id,
