@@ -1,6 +1,5 @@
-import * as multer from 'multer';
-import crypto from 'crypto';
-import { uploadFile, deleteFile, getObjectSignedUrl } from './utils/aws';
+const crypto = require('crypto');
+const { uploadFile, deleteFile, getObjectSignedUrl } = require('./utils/aws.js');
 
 const express = require('express');
 const { ApolloServer } = require('apollo-server-express');
@@ -8,6 +7,8 @@ const connectDB = require('./config/db');
 const typeDefs = require('./schemas');
 const resolvers = require('./resolvers');
 const { auth } = require('./middleware/auth');
+
+const multer = require('multer');
 
 // Multer assists in dealing with multipart/form-data, keeps file in memory without saving file to file system
 const storage = multer.memoryStorage();
