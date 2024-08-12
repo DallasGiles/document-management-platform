@@ -21,7 +21,7 @@ const s3Client = new S3Client({
 const randomImageName = (bytes = 32) => crypto.randomBytes(bytes).toString('hex');
 
 
-export async function uploadFile(fileStream, fileName, mimetype) {
+async function uploadFile(fileStream, fileName, mimetype) {
   const uniqueName = randomImageName();
   const uploadParams = {
     Bucket: bucketName,
@@ -33,7 +33,7 @@ export async function uploadFile(fileStream, fileName, mimetype) {
   return s3Client.send(new PutObjectCommand(uploadParams));
 }
 
-export function deleteFile(fileName) {
+function deleteFile(fileName) {
   const deleteParams = {
     Bucket: bucketName,
     Key: fileName,
@@ -42,7 +42,7 @@ export function deleteFile(fileName) {
   return s3Client.send(new DeleteObjectCommand(deleteParams));
 }
 
-export async function getObjectSignedUrl(key) {
+async function getObjectSignedUrl(key) {
   const params = {
     Bucket: bucketName,
     Key: key
@@ -55,3 +55,5 @@ export async function getObjectSignedUrl(key) {
 
   return url
 }
+
+module.exports = { uploadFile, deleteFile, getObjectSignedUrl }

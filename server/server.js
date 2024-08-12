@@ -8,6 +8,8 @@ const typeDefs = require('./schemas');
 const resolvers = require('./resolvers');
 const { auth } = require('./middleware/auth');
 
+const multer = require('multer');
+
 // Multer assists in dealing with multipart/form-data, keeps file in memory without saving file to file system
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
