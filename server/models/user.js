@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({
-  // TODO: username should probably be removed
+  // TODO: username should probably be removed as email is used for login. Consider switching to first and last name for use in foreman teams
   username: {
     type: String,
     required: true,

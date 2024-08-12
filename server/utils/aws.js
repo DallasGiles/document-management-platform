@@ -20,6 +20,7 @@ const s3Client = new S3Client({
 
 const randomImageName = (bytes = 32) => crypto.randomBytes(bytes).toString('hex');
 
+// TODO: Make sure AWS S3 values are properly aligned with db values
 
 async function uploadFile(fileStream, fileName, mimetype) {
   const uniqueName = randomImageName();
