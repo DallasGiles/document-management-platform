@@ -59,7 +59,7 @@ function FileUpload() {
       />
       <button
         type="button"
-        className="bg-white text-gray-700 font-medium py-1 px-4 border border-gray-400 rounded-lg tracking-wide m-4 hover:bg-gray-100"
+        className="bg-blue-500 text-white font-medium py-1 px-4 border border-gray-400 rounded-lg tracking-wide m-4 hover:bg-green-400"
         onClick={handleClick}
       >
         +PDF
