@@ -9,6 +9,7 @@ function App() {
 
   return (
     <ApolloProvider client={client}>
+
       <div className="App">
         <nav class="bg-white w-screen border-b border-gray-300">
           <div class="flex justify-between items-center">
@@ -27,9 +28,8 @@ function App() {
         </nav>
 
         <div class="z-50 relative">
+
           <Outlet />
-        </div>
-      </div>
     </ApolloProvider>
   );
 }
