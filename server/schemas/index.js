@@ -1,12 +1,10 @@
-const { gql } = require('apollo-server-express');
-const userTypeDefs = require('./userSchema');
-const sitePlanTypeDefs = require('./sitePlanSchema');
+import { gql } from 'apollo-server-express';
+import { userTypeDefs } from './userSchema.js';
+import { sitePlanTypeDefs } from './sitePlanSchema.js';
 
-const typeDefs = gql`
+export const typeDefs = gql`
   type Query
   type Mutation
   ${userTypeDefs}
   ${sitePlanTypeDefs}
 `;
-
-module.exports = typeDefs;

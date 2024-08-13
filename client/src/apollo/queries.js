@@ -5,6 +5,7 @@ export const GET_SITE_PLANS = gql`
   query GetSitePlans {
     sitePlans {
       id
+      url
       title
       status
       uploadedBy
@@ -62,6 +63,14 @@ export const GET_USERS_UNDER_FOREMAN = gql`
       username
       email
       role
+    }
+  }
+`;
+
+export const SITEPLAN_UPLOAD = gql`
+  mutation UploadSitePlan($file: Upload!) {
+    uploadPlan(file: $file) {
+      title
     }
   }
 `;

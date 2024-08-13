@@ -19,9 +19,11 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      console.log('Try sending login info');
       const result = await login({ variables: { ...formData } });
+      console.log('handleSubmit', result);
       localStorage.setItem('token', result.data.login);
-      history.push('/');
+      history.push('/management');
     } catch (error) {
       console.error('Error logging in:', error);
     }

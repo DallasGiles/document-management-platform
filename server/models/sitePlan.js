@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 // TODO: Make sure sitePlanSchema is properly aligned with AWS S3 values
 const sitePlanSchema = new mongoose.Schema({
   title: {
@@ -31,6 +31,4 @@ const sitePlanSchema = new mongoose.Schema({
   timestamps: true,
 });
 
-const SitePlan = mongoose.model('SitePlan', sitePlanSchema);
-
-module.exports = SitePlan;
+export const SitePlan = mongoose.model('SitePlan', sitePlanSchema);
