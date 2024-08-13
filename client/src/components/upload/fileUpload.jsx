@@ -1,51 +1,31 @@
 import React, { useRef } from 'react';
+import { useMutation } from '@apollo/client';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
+import { SITEPLAN_UPLOAD } from '../../apollo/queries';
 
 function FileUpload() {
   // Create a ref to access the hidden file input element
   const fileInputRef = useRef(null);
-
-  // AWS S3 Client Setup
-  const s3Client = new S3Client({
-    region: process.env.REACT_APP_AWS_REGION, 
-    credentials: {
-      accessKeyId: process.env.REACT_APP_AWS_ACCESS_KEY,
-      secretAccessKey: process.env.REACT_APP_AWS_SECRET_ACCESS_KEY,
-    },
-  });
-
-  // Random File Name Generator
-  const randomFileName = (bytes = 32) => {
-    const array = new Uint8Array(bytes);
-    window.crypto.getRandomValues(array);
-    return Array.from(array, byte => byte.toString(16).padStart(2, '0')).join('');
-  };
-
-  const handleFileUpload = async (event) => {
-    const file = event.target.files[0];
-
-    if (file) {
-      const uniqueName = randomFileName();
-      const uploadParams = {
-        Bucket: process.env.REACT_APP_AWS_BUCKET_NAME,
-        Key: uniqueName,
-        Body: file,
-        ContentType: file.type,
-      };
-
-      try {
-        const result = await s3Client.send(new PutObjectCommand(uploadParams));
-        console.log('File uploaded successfully:', result);
-      } catch (error) {
-        console.error('Error uploading file:', error);
-      }
-    }
-  };
+  const [ uploadFile ] = useMutation(SITEPLAN_UPLOAD);
 
   const handleClick = () => {
     // Trigger the click event on the hidden file input
     fileInputRef.current.click();
   };
+
+  const handleFileUpload = async ({ target: { validity, files: [file] } }) => {
+    if (validity.valid) {
+      const token = localStorage.getItem('token');
+      const result = await uploadFile({
+        variables: {
+          file
+        },
+        context: { headers: { authorization: `Bearer ${token}` } }
+      });
+
+      console.log('result', result);
+    }
+  }
 
   return (
     <div>

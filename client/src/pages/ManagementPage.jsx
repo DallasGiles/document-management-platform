@@ -1,9 +1,20 @@
-import React, { useState } from "react";
-import FileUpload from "../components/upload/fileUpload.jsx";
+import React, { useState, useEffect } from 'react';
+import { useQuery } from '@apollo/client';
+import FileUpload from '../components/upload/fileUpload.jsx';
+import { GET_SITE_PLANS } from '../apollo/queries';
 
 function ManagementPage() {
   const [formDetails, setFormDetails] = useState(""); // State to store the textarea input
   const [projectDetails, setProjectDetails] = useState(""); // State to store submitted details
+
+  const { loading: sitePlansLoading, error: sitePlansError, data: sitePlansData } = useQuery(GET_SITE_PLANS);
+
+  useEffect(() => {
+    if (sitePlansData) {
+      console.log('getSitePlans', sitePlansData, sitePlansLoading, sitePlansError);
+
+    }
+  }, [sitePlansData]);
 
   // Handle textarea input change
   const handleDetailsChange = (event) => {
@@ -16,7 +27,7 @@ function ManagementPage() {
     setProjectDetails(formDetails); // Set the project details to display
     setFormDetails(""); // Clear the form input after submission
   };
-
+ // TODO: We have the list of site plans in sitePlansData, we need to loop through them and display the title, status, and uploadedBy in a table with a button that opens the url of the siteplan
   return (
     <div className="bg-gray-900 w-full transition-all duration-200 ease-in-out">
       <div className="flex items-center w-full"></div>

@@ -24,7 +24,7 @@ const Login = () => {
     try {
       const result = await loginMutation({ variables: { ...formData } });
       login(result.data.login);
-      navigate('/'); // This will trigger the useEffect in App.js to redirect based on role
+      navigate('/management'); // This will trigger the useEffect in App.js to redirect based on role
     } catch (error) {
       console.error('Error logging in:', error);
     }

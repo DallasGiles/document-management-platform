@@ -1,8 +1,8 @@
-const User = require('../models/user');
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
+import { User } from '../models/user.js';
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
 
-const userResolvers = {
+export const userResolvers = {
   Query: {
     // TODO: users query didn't seem to be working from the signup FE page
     users: () => User.find(),
@@ -29,8 +29,7 @@ const userResolvers = {
       if (!user || !await bcrypt.compare(password, user.password)) {
         throw new Error('Invalid login credentials');
       }
-      return jwt.sign({ id: user.id, role: user.role }, process.env.JWT_SECRET);
+      return jwt.sign({ id: user.id, role: user.role, organization: user.organization }, process.env.JWT_SECRET);
     },
   },
 };
-module.exports = userResolvers;

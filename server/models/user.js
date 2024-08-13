@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 const userSchema = new mongoose.Schema({
   // TODO: username should probably be removed as email is used for login. Consider switching to first and last name for use in foreman teams
@@ -28,10 +28,12 @@ const userSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
   },
+  sitePlans: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'SitePlan',
+  }]
 }, {
   timestamps: true,
 });
 
-const User = mongoose.model('User', userSchema);
-
-module.exports = User;
+export const User = mongoose.model('User', userSchema);

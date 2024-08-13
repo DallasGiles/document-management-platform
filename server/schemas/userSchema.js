@@ -1,8 +1,8 @@
-const { gql } = require('apollo-server-express');
+import { gql } from 'apollo-server-express';
 
 // TODO: add foreman to User type and to signup mutation
 // TODO: add organization to User type
-const userTypeDefs = gql`
+export const userTypeDefs = gql`
   type User {
     id: ID!
     username: String!
@@ -20,5 +20,3 @@ const userTypeDefs = gql`
     login(email: String!, password: String!): String
   }
 `;
-
-module.exports = userTypeDefs;

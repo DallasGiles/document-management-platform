@@ -1,15 +1,30 @@
-const SitePlan = require('../models/SitePlan');
-// Change code below to appropriate functions from AWS SDK
-const { uploadFile, deleteFile, getObjectSignedUrl } = require('../utils/aws');
+import { SitePlan } from '../models/sitePlan.js';
+import GraphQLUpload from 'graphql-upload/GraphQLUpload.mjs';
+import { uploadFile, getObjectSignedUrl } from '../util/aws.js';
 // TODO: All users will likely need to use query for viewing sitePlans.
 // TODO: Potentially remove/comment out all approval related mutations as this feature will not be ready
-const sitePlanResolvers = {
+export const sitePlanResolvers = {
+  Upload: GraphQLUpload,
   Query: {
     sitePlans: async (parent, args, { user }) => {
       if (user.role !== 'Foreman') {
         throw new Error('Forbidden');
       }
-      return SitePlan.find({ team: user.organization });
+      
+      const sitePlans = await SitePlan.find({ team: user.organization });
+
+      if (!sitePlans) {
+        throw new Error('No site plans for team');
+      }
+
+      const promises = sitePlans.map(async (plan) => {
+        plan.url = await getObjectSignedUrl(plan.fileKey);
+        
+        return plan;
+      });
+
+      const result = await Promise.all(promises);
+      return result;
     },
     sitePlan: async (parent, { id }) => {
       const plan = await SitePlan.findById(id);
@@ -27,11 +42,8 @@ const sitePlanResolvers = {
       if (user.role !== 'Foreman') {
         throw new Error('Forbidden');
       }
-      // const file = {
-      //   filename: `${title}-${Date.now()}.pdf`,
-      //   content: Buffer.from(content, 'utf-8'), // Ensure content is in Buffer format
-      // };
-      const { createReadStream, filename, mimetype } = await file;
+      const { createReadStream, filename, mimetype } = (await file).file;
+      
       const stream = createReadStream();
       const uploadResponse = await uploadFile(stream, filename, mimetype);
       const newPlan = new SitePlan({
@@ -67,5 +79,3 @@ const sitePlanResolvers = {
     },
   },
 };
-
-module.exports = sitePlanResolvers;
