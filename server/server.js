@@ -23,23 +23,33 @@ require('dotenv').config();
 // Connect to the database
 connectDB();
 
-const app = express();
+async function startApolloServer() {
+  const app = express();
+  
+  // Middleware for authentication
+  // TODO: enable auth again once it doesn't apply to login and signup mutations
+  // app.use(auth);
+  
+  const server = new ApolloServer({
+    typeDefs,
+    resolvers,
+    context: ({ req }) => ({
+      user: req.user,
+    }),
+  });
+  
+  await server.start();
+  
+  server.applyMiddleware({ app });
+  
+  const PORT = process.env.PORT || 5000;
+  
+  await new Promise(resolve => app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}${server.graphqlPath}`);
+    resolve();
+  }));
 
-// Middleware for authentication
-app.use(auth);
+  return { server, app };
+}
 
-const server = new ApolloServer({
-  typeDefs,
-  resolvers,
-  context: ({ req }) => ({
-    user: req.user,
-  }),
-});
-
-server.applyMiddleware({ app });
-
-const PORT = process.env.PORT || 5000;
-
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}${server.graphqlPath}`);
-});
+startApolloServer();

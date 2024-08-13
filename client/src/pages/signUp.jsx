@@ -40,7 +40,8 @@ const SignUp = () => {
       console.error('Error signing up:', error);
     }
   };
-
+// TODO: Remove references to username. Email is used for login so username is unecessary
+// TODO: Fix foremen selection option
   return (
     <main className="mx-auto flex min-h-screen w-full items-center justify-center bg-gray-900 text-white">
       <section className="flex w-[30rem] flex-col space-y-10">

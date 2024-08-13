@@ -1,5 +1,5 @@
 const { gql } = require('apollo-server-express');
-
+// TODO: Make sure schema aligns with AWS S3 values
 const sitePlanTypeDefs = gql`
   scalar Upload
 

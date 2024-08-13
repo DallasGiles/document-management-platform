@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
-
+// TODO: Determine if checkRole is necessary
+// TODO: Do we need JWT_SECRET in our .env files?
 const auth = (req, res, next) => {
   const token = req.header('Authorization').replace('Bearer ', '');
   const data = jwt.verify(token, process.env.JWT_SECRET);

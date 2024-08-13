@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-
+// TODO: Make sure sitePlanSchema is properly aligned with AWS S3 values
 const sitePlanSchema = new mongoose.Schema({
   title: {
     type: String,

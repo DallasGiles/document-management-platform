@@ -1,7 +1,8 @@
 const SitePlan = require('../models/SitePlan');
 // Change code below to appropriate functions from AWS SDK
 const { uploadFile, deleteFile, getObjectSignedUrl } = require('../utils/aws');
-
+// TODO: All users will likely need to use query for viewing sitePlans.
+// TODO: Potentially remove/comment out all approval related mutations as this feature will not be ready
 const sitePlanResolvers = {
   Query: {
     sitePlans: async (parent, args, { user }) => {

@@ -4,11 +4,14 @@ const jwt = require('jsonwebtoken');
 
 const userResolvers = {
   Query: {
+    // TODO: users query didn't seem to be working from the signup FE page
     users: () => User.find(),
     user: (parent, { id }) => User.findById(id),
-    usersUnderForeman: (parent, { foremanId }) => User.find({ foreman: foremanId }),
+    // TODO: Get usersUnderForeman working
+    // usersUnderForeman: (parent, { foremanId }) => User.find({ foreman: foremanId }),
   },
   Mutation: {
+    // TODO: Make sure that auth doesn't apply to these 2 resolvers
     signUp: async (parent, { username, email, password, role, organization, foreman }) => {
       const hashedPassword = await bcrypt.hash(password, 10);
       const newUser = new User({
