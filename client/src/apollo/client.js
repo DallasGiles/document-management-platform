@@ -3,7 +3,8 @@ import createUploadLink from 'apollo-upload-client/createUploadLink.mjs';
 import { setContext } from '@apollo/client/link/context';
 
 const uploadLink = createUploadLink({
-  uri: process.env.REACT_APP_BACKEND_URI || 'http://localhost:5000/graphql',
+  // uri: process.env.REACT_APP_BACKEND_URI || 'http://localhost:5000/graphql',
+  uri: '/graphql',
   headers: {
     'keepalive': 'true',
     'content-type': 'application/json'
