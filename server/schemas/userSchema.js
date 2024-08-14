@@ -16,7 +16,7 @@ export const userTypeDefs = gql`
   }
 
   extend type Mutation {
-    signUp(username: String!, email: String!, password: String!, role: String!, organization: String!): User
+    signUp(username: String!, email: String!, password: String!, role: String!, organization: String!, foreman: ID): User
     login(email: String!, password: String!): String
   }
 `;

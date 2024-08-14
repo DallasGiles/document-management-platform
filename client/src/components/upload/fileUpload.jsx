@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { useMutation } from '@apollo/client';
-import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
+// import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import { SITEPLAN_UPLOAD } from '../../apollo/queries';
 
 function FileUpload() {
