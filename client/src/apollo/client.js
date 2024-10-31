@@ -2,14 +2,14 @@ import { ApolloClient, InMemoryCache } from '@apollo/client';
 import createUploadLink from 'apollo-upload-client/createUploadLink.mjs';
 import { setContext } from '@apollo/client/link/context';
 
+// Use environment variable for dynamic URI, with a fallback for production
 const uploadLink = createUploadLink({
-  // uri: process.env.REACT_APP_BACKEND_URI || 'http://localhost:5000/graphql',
-  uri: '/graphql',
+  uri: process.env.REACT_APP_BACKEND_URI || 'https://construct-comm.onrender.com/graphql',
   headers: {
     'keepalive': 'true',
-    'content-type': 'application/json'
-  }
-})
+    'content-type': 'application/json',
+  },
+});
 
 // Auth middleware to attach JWT token to headers
 const authLink = setContext((_, { headers }) => {
@@ -22,6 +22,7 @@ const authLink = setContext((_, { headers }) => {
   };
 });
 
+// Create Apollo Client with auth and upload links
 const client = new ApolloClient({
   link: authLink.concat(uploadLink),
   cache: new InMemoryCache(),

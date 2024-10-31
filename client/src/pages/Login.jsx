@@ -28,7 +28,20 @@ const Login = () => {
     } catch (error) {
       console.error('Error logging in:', error);
     }
-  };
+
+    login(result.data.login);  // Assuming login expects the login data
+    navigate('/');  // Redirect on successful login
+  } catch (error) {
+    // Log the full error and raw response for debugging
+    console.error('Error logging in:', error);
+    if (error.networkError?.result) {
+      console.error('Raw response:', error.networkError.result);
+    } else {
+      console.error('Error message:', error.message);
+    }
+    alert('Login failed. Please check your credentials and try again.');
+  }
+};
 
   return (
     <main className="mx-auto flex min-h-screen w-full items-center justify-center bg-gray-900 text-white">
