@@ -1,7 +1,8 @@
-const { S3Client, PutObjectCommand, DeleteObjectCommand, GetObjectCommand } = require ("@aws-sdk/client-s3");
-const { getSignedUrl } = require("@aws-sdk/s3-request-presigner");
-const crypto = require('crypto');
-const dotenv = require('dotenv');
+import { S3Client, PutObjectCommand, DeleteObjectCommand, GetObjectCommand } from "@aws-sdk/client-s3";
+import { Upload } from '@aws-sdk/lib-storage';
+import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
+import crypto from 'crypto';
+import dotenv from 'dotenv';
 
 dotenv.config()
 
@@ -22,7 +23,8 @@ const randomImageName = (bytes = 32) => crypto.randomBytes(bytes).toString('hex'
 
 // TODO: Make sure AWS S3 values are properly aligned with db values
 
-async function uploadFile(fileStream, fileName, mimetype) {
+export async function uploadFile(fileStream, fileName, mimetype) {
+  console.log('uploadFile', fileName, accessKeyId, secretAccessKey, bucketName, region);
   const uniqueName = randomImageName();
   const uploadParams = {
     Bucket: bucketName,
@@ -31,10 +33,23 @@ async function uploadFile(fileStream, fileName, mimetype) {
     ContentType: mimetype
   }
 
-  return s3Client.send(new PutObjectCommand(uploadParams));
+  const uploads = new Upload({
+    client: s3Client,
+    params: uploadParams
+  });
+
+  uploads.on('httpUploadProgress', (progress) => {
+    console.log('upload progress', progress);
+  });
+
+  const result = await uploads.done();
+
+  console.log('uploads done', result);
+  return result;
+  // return s3Client.send(new PutObjectCommand(uploadParams));
 }
 
-function deleteFile(fileName) {
+export function deleteFile(fileName) {
   const deleteParams = {
     Bucket: bucketName,
     Key: fileName,
@@ -43,7 +58,7 @@ function deleteFile(fileName) {
   return s3Client.send(new DeleteObjectCommand(deleteParams));
 }
 
-async function getObjectSignedUrl(key) {
+export async function getObjectSignedUrl(key) {
   const params = {
     Bucket: bucketName,
     Key: key
@@ -56,5 +71,3 @@ async function getObjectSignedUrl(key) {
 
   return url
 }
-
-module.exports = { uploadFile, deleteFile, getObjectSignedUrl }

@@ -1,7 +1,7 @@
-const userResolvers = require('./userResolvers');
-const sitePlanResolvers = require('./sitePlanResolvers');
+import { userResolvers } from './userResolvers.js';
+import { sitePlanResolvers } from './sitePlanResolvers.js';
 
-const resolvers = {
+export const resolvers = {
   Query: {
     ...userResolvers.Query,
     ...sitePlanResolvers.Query,
@@ -11,5 +11,3 @@ const resolvers = {
     ...sitePlanResolvers.Mutation,
   },
 };
-
-module.exports = resolvers;

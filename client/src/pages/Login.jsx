@@ -20,13 +20,13 @@ const Login = () => {
   };
 
   const handleSubmit = async (e) => {
-  e.preventDefault();
-  try {
-    const result = await loginMutation({ variables: { ...formData } });
-
-    // Check if data is missing in the response
-    if (!result.data || !result.data.login) {
-      throw new Error('No data returned from server');
+    e.preventDefault();
+    try {
+      const result = await loginMutation({ variables: { ...formData } });
+      login(result.data.login);
+      navigate('/management'); // This will trigger the useEffect in App.js to redirect based on role
+    } catch (error) {
+      console.error('Error logging in:', error);
     }
 
     login(result.data.login);  // Assuming login expects the login data

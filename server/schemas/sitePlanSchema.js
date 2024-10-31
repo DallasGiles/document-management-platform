@@ -1,18 +1,13 @@
-const { gql } = require('apollo-server-express');
+import { gql } from 'apollo-server-express';
 // TODO: Make sure schema aligns with AWS S3 values
-const sitePlanTypeDefs = gql`
+export const sitePlanTypeDefs = gql`
   scalar Upload
-
-  type File {
-    filename: String!
-    mimetype: String!
-    encoding: String!
-  }
 
   type SitePlan {
     id: ID!
     title: String!
     content: String!
+    url: String!
     status: String!
     uploadedBy: String!
     team: String!
@@ -24,10 +19,8 @@ const sitePlanTypeDefs = gql`
   }
 
   extend type Mutation {
-    uploadPlan(file: Upload!): File!
+    uploadPlan(file: Upload!): SitePlan!
     submitForApproval(planId: ID!): SitePlan
     approvePlan(planId: ID!): SitePlan
   }
 `;
-
-module.exports = sitePlanTypeDefs;
