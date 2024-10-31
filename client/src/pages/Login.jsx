@@ -20,15 +20,28 @@ const Login = () => {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const result = await loginMutation({ variables: { ...formData } });
-      login(result.data.login);
-      navigate('/'); // This will trigger the useEffect in App.js to redirect based on role
-    } catch (error) {
-      console.error('Error logging in:', error);
+  e.preventDefault();
+  try {
+    const result = await loginMutation({ variables: { ...formData } });
+
+    // Check if data is missing in the response
+    if (!result.data || !result.data.login) {
+      throw new Error('No data returned from server');
     }
-  };
+
+    login(result.data.login);  // Assuming login expects the login data
+    navigate('/');  // Redirect on successful login
+  } catch (error) {
+    // Log the full error and raw response for debugging
+    console.error('Error logging in:', error);
+    if (error.networkError?.result) {
+      console.error('Raw response:', error.networkError.result);
+    } else {
+      console.error('Error message:', error.message);
+    }
+    alert('Login failed. Please check your credentials and try again.');
+  }
+};
 
   return (
     <main className="mx-auto flex min-h-screen w-full items-center justify-center bg-gray-900 text-white">

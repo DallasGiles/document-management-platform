@@ -2,7 +2,7 @@ import { ApolloClient, InMemoryCache, createHttpLink } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 // HTTP connection to the API
 const httpLink = createHttpLink({
-  uri: 'http://localhost:5000/graphql',
+  uri: 'https://construct-comm.onrender.com/graphql',
 });
 
 // Auth middleware to attach JWT token to headers
